@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 
-test("test", { tag: "@testulMeu2" }, async ({ page }) => {
+test("test", { tag: "@testulMeu3" }, async ({ page }) => {
   await page.goto("https://cnpgenerator.ro/");
   await page.getByLabel("Sex: *").selectOption("0");
   await page.getByRole("link", { name: "Validare CNP", exact: true }).click();
