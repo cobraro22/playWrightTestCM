@@ -1,7 +1,7 @@
-trigger:
-  branches:
-    include:
-      - main # Sau ramura ta principală
+# trigger:
+#   branches:
+#     include:
+#       - main # Sau ramura ta principală
 
 variables:
   # Variabila care va conține tag-ul pentru filtrarea testelor
