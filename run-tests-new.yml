@@ -2,10 +2,20 @@
 #   branches:
 #     include:
 #       - main # Sau ramura ta principală
+trigger: none
 
-variables:
-  # Variabila care va conține tag-ul pentru filtrarea testelor
-  GREP_TAG: "@smoke" # Înlocuiește cu tag-ul dorit, sau poți seta o valoare diferită prin UI
+parameters:
+  - name: grepTags
+    type: object
+    default: '"@smoke"'
+
+schedules:
+  - cron: '0 2 * * *'
+    displayName: Automation Daily Morning Tests Run
+    branches:
+      include:
+        - main
+    always: true
 
 pool:
   vmImage: "ubuntu-latest" # Poți folosi orice altă imagine preferată
@@ -27,7 +37,13 @@ steps:
 
   - script: |
       # Rulează testele Playwright folosind variabila GREP_TAG
-      npx playwright test --grep $(GREP_TAG)
+      npx playwright test --grep $(grepTags)
     displayName: "Run Playwright Tests"
-    env:
-      GREP_TAG: $(GREP_TAG) # Setează variabila GREP_TAG pentru a fi folosită în comandă
+    # env:
+    #   GREP_TAG: $(grepTags) # Setează variabila GREP_TAG pentru a fi folosită în comandă
+  - task: PublishPipelineArtifact@1
+    condition: failed()
+    inputs:
+      targetPath: 'playwright-report'
+      artifact: 'playwright-report'
+    displayName: 'Publicare raport Playwright'
