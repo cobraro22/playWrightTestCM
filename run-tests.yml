@@ -1,0 +1,33 @@
+trigger:
+  branches:
+    include:
+      - main # Sau ramura ta principală
+
+variables:
+  # Variabila care va conține tag-ul pentru filtrarea testelor
+  GREP_TAG: "my-tag" # Înlocuiește cu tag-ul dorit, sau poți seta o valoare diferită prin UI
+
+pool:
+  vmImage: "ubuntu-latest" # Poți folosi orice altă imagine preferată
+
+steps:
+  - task: NodeTool@0
+    inputs:
+      versionSpec: "16.x" # Folosește versiunea de Node.js pe care o ai nevoie
+    displayName: "Install Node.js"
+
+  - script: |
+      npm install -g playwright
+      npm ci  # Instalează dependențele proiectului
+    displayName: "Install dependencies"
+
+  - script: |
+      npx playwright install  # Instalează browserele necesare Playwright
+    displayName: "Install Playwright Browsers"
+
+  - script: |
+      # Rulează testele Playwright folosind variabila GREP_TAG
+      npx playwright test --grep $(GREP_TAG)
+    displayName: "Run Playwright Tests"
+    env:
+      GREP_TAG: $(GREP_TAG) # Setează variabila GREP_TAG pentru a fi folosită în comandă
