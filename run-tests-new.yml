@@ -6,6 +6,10 @@
 variables:
   # Variabila care va conține tag-ul pentru filtrarea testelor
   GREP_TAG: "@smoke" # Înlocuiește cu tag-ul dorit, sau poți seta o valoare diferită prin UI
+parameters:
+  - name: grepTags
+    type: object
+    default: '"@api @ui"'
 
 pool:
   vmImage: "ubuntu-latest" # Poți folosi orice altă imagine preferată
