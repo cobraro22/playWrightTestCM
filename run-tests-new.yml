@@ -8,6 +8,14 @@ parameters:
     type: object
     default: '"@smoke"'
 
+schedules:
+  - cron: '0 2 * * *'
+    displayName: Automation Daily Morning Tests Run
+    branches:
+      include:
+        - main
+    always: true
+
 pool:
   vmImage: "ubuntu-latest" # Poți folosi orice altă imagine preferată
 
