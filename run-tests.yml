@@ -5,7 +5,7 @@ trigger:
 
 variables:
   # Variabila care va conține tag-ul pentru filtrarea testelor
-  GREP_TAG: "my-tag" # Înlocuiește cu tag-ul dorit, sau poți seta o valoare diferită prin UI
+  GREP_TAG: "@smoke" # Înlocuiește cu tag-ul dorit, sau poți seta o valoare diferită prin UI
 
 pool:
   vmImage: "ubuntu-latest" # Poți folosi orice altă imagine preferată
