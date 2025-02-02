@@ -3,9 +3,6 @@
 #     include:
 #       - main # Sau ramura ta principală
 
-variables:
-  # Variabila care va conține tag-ul pentru filtrarea testelor
-  GREP_TAG: "@smoke" # Înlocuiește cu tag-ul dorit, sau poți seta o valoare diferită prin UI
 parameters:
   - name: grepTags
     type: object
@@ -35,3 +32,9 @@ steps:
     displayName: "Run Playwright Tests"
     # env:
     #   GREP_TAG: $(grepTags) # Setează variabila GREP_TAG pentru a fi folosită în comandă
+  - task: PublishPipelineArtifact@1
+    condition: failed()
+    inputs:
+      targetPath: 'playwright-report'
+      artifact: 'playwright-report'
+    displayName: 'Publicare raport Playwright'
