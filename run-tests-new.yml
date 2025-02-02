@@ -2,6 +2,7 @@
 #   branches:
 #     include:
 #       - main # Sau ramura ta principală
+trigger: none
 
 parameters:
   - name: grepTags
