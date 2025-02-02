@@ -9,7 +9,7 @@ variables:
 parameters:
   - name: grepTags
     type: object
-    default: '"@api @ui"'
+    default: '"@smoke"'
 
 pool:
   vmImage: "ubuntu-latest" # Poți folosi orice altă imagine preferată
@@ -31,7 +31,7 @@ steps:
 
   - script: |
       # Rulează testele Playwright folosind variabila GREP_TAG
-      npx playwright test --grep $(GREP_TAG)
+      npx playwright test --grep $(grepTags)
     displayName: "Run Playwright Tests"
-    env:
-      GREP_TAG: $(GREP_TAG) # Setează variabila GREP_TAG pentru a fi folosită în comandă
+    # env:
+    #   GREP_TAG: $(grepTags) # Setează variabila GREP_TAG pentru a fi folosită în comandă
