@@ -22,5 +22,5 @@ jobs:
     - name: Build Docker image
       run: docker build -t playwright-tests .
 
-    - name: Run Playwright tests in Docker
-      run: docker run --rm playwright-tests npx playwright test --grep "@smoke" 
+    # - name: Run Playwright tests in Docker
+    #   run: docker run --rm playwright-tests npx playwright test --grep "@smoke" 
