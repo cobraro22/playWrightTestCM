@@ -3,5 +3,5 @@ WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm install
 COPY . .
-CMD ["npx", "playwright", "test", "--headless"]
+CMD ["npx", "playwright", "test"]
 
