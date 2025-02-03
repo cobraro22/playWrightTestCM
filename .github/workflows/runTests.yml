@@ -5,6 +5,7 @@ name: Run Tests
 #     branches: [ "main" ]
 #   pull_request:
 #     branches: [ "main" ]
+trigger: none
 
 jobs:
 
