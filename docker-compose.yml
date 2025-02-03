@@ -1,56 +1,10 @@
-# Docker
-# Build a Docker image
-# https://docs.microsoft.com/azure/devops/pipelines/languages/docker
-
-# trigger:
-# - main
-
-# resources:
-# - repo: self
-
-# variables:
-#   tag: 'Versiunea-> $(Build.BuildId)'
-
-# stages:
-# - stage: Build
-#   displayName: Build image
-#   jobs:
-#   - job: Build
-#     displayName: Creare Build
-#     pool:
-#       vmImage: ubuntu-latest
-#     steps:
-#     - task: Docker@2
-#       displayName: Build an image
-#       inputs:
-#         command: build
-#         dockerfile: '**/Dockerfile'
-#         tags: |
-#           $(tag)
-          
-trigger:
-  - main
-pool:
-  vmImage: 'ubuntu-latest'
-jobs:
-  - job: Build
-    displayName: "Build Docker PLayWright Image"
-    steps:
-      - task: UseNode@1
-        inputs:
-          version: '20.x'
-      - script: |
-          echo "Building Docker image..."
-          docker build -t playwright-tests .
-        displayName: "Build Docker Image"
-
-      # - script: |
-      #     echo "Running Playwright tests..."
-      #     docker run --rm -v $(Build.ArtifactStagingDirectory):/app/playwright-report playwright-tests
-      #   displayName: "Run Playwright Tests"
-
-      # - task: PublishBuildArtifacts@1
-      #   inputs:
-      #     pathToPublish: '$(Build.ArtifactStagingDirectory)/playwright-report'
-      #     artifactName: 'PlaywrightReport'
-      #   displayName: "Publish Playwright Report"
+version: "3"
+services:
+  playwright-tests:
+    build: .
+    container_name: playwright-runner
+    volumes:
+      - .:/app
+      - ./playwright-report:/app/playwright-report
+    working_dir: /app
+    command: ["npx", "playwright", "test", "--reporter=html"]
