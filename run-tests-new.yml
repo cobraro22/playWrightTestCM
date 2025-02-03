@@ -1,4 +1,4 @@
-name: $(SourceBranchName)_$(Hours)-$(Minutes)_$(Date:yyyy_MM_dd)_$(BuildID)$(Rev:.r)
+name: PLayWright CM TEST - $(SourceBranchName)_$(Hours)-$(Minutes)_$(Date:yyyy_MM_dd)_$(BuildID)$(Rev:.r)
 
 # trigger:
 #   branches:
