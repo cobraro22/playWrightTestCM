@@ -17,6 +17,7 @@ export default defineConfig({
   // daca testele au mai mult de 10 minute = > failed
   globalTimeout: 10 * 60 * 1000,
   testDir: "./tests",
+  testMatch: "**/*.ts",
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
