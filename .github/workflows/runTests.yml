@@ -16,6 +16,6 @@ jobs:
     steps:
     - name:  Checkout 1
       uses: actions/checkout@v4
-    - run : Running Tests
+    - run : echo Running Tests
     # - name: Run Tests
     #   run: docker run --rm playwright-tests npx playwright test --grep "@regression"
