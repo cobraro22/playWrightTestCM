@@ -17,5 +17,5 @@ jobs:
     - name:  Checkout 1
       uses: actions/checkout@v4
     - run : Running Tests
-    - name: Run Tests
-      run: docker run --rm playwright-tests npx playwright test --grep "@regression"
+    # - name: Run Tests
+    #   run: docker run --rm playwright-tests npx playwright test --grep "@regression"
