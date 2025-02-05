@@ -1,0 +1,21 @@
+name: Run Tests
+
+on: [push]
+#   push:
+#     branches: [ "main" ]
+#   pull_request:
+#     branches: [ "main" ]
+# trigger: none
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name:  Checkout 1
+      uses: actions/checkout@v4
+    - run : echo Running Tests
+    # - name: Run Tests
+    #   run: docker run --rm playwright-tests npx playwright test --grep "@regression"

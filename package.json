@@ -1,0 +1,25 @@
+{
+  "name": "test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx playwright test",
+    "testChrome": "npx playwright test --project chromium",
+    "testGrepSmoke": "npx playwright test --grep @smoke",
+    "test:report": "npx playwright test && npx playwright show-report",
+    "test:local": "BASE_URL=http://localhost:4200 npx playwright test",
+    "test:UI": "npx playwright test --ui"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.50.1",
+    "@types/node": "^22.10.7"
+  },
+  "dependencies": {
+    "-": "^0.0.1",
+    "D": "^1.0.0"
+  }
+}

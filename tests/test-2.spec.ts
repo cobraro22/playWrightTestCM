@@ -1,0 +1,75 @@
+import { test, expect } from "@playwright/test";
+
+test("test", async ({ page }) => {
+  await page.goto("https://cnpgenerator.ro/");
+  await page.getByLabel("Sex: *").selectOption("0");
+  await page.getByLabel("Țara nașterii: *").selectOption("false");
+  await page.getByLabel("Județul nașterii: *").selectOption("10");
+  await page.getByRole("link", { name: "Contact" }).click();
+  await page.getByLabel("Email").click();
+  await page.getByLabel("Email").fill("test@k.com");
+  await page.getByRole("link", { name: "Generator CNP" }).click();
+  await page.getByLabel("Data nașterii:").fill("1979-04-19");
+  await page.getByLabel("Județul nașterii: *").selectOption("16");
+  await page.getByLabel("Țara nașterii: *").selectOption("false");
+  await page.getByLabel("Țara nașterii: *").selectOption("true");
+  await page.getByLabel("Țara nașterii: *").selectOption("false");
+  await page.getByLabel("Țara nașterii: *").selectOption("true");
+  await page.getByLabel("Sex: *").selectOption("0");
+  await page.getByRole("link", { name: "Validare CNP", exact: true }).click();
+  await page.getByPlaceholder("Introduceti CNP").click();
+  await page.getByRole("button", { name: "Valideaza CNP" }).click();
+  await page.getByPlaceholder("Introduceti CNP").click();
+  await page.getByRole("button", { name: "Valideaza CNP" }).click();
+  await page.getByPlaceholder("Introduceti CNP").click();
+  await page.getByPlaceholder("Introduceti CNP").fill("1930426415035");
+  await page.getByRole("button", { name: "Valideaza CNP" }).click();
+  await expect(page.getByText("CNP-ul este valid!")).toBeVisible();
+  await page.getByPlaceholder("Introduceti CNP").click();
+  await page.getByPlaceholder("Introduceti CNP").fill("19304264150351");
+  await page.getByRole("button", { name: "Valideaza CNP" }).click();
+  await page.getByText("CNP-ul trebuie sa contina 13").click();
+  await page.getByText("Acest tool vă va verifica CNP").click();
+  await page.getByText("Orice cod numeric personal").click();
+  await page.getByText("Pentru orice CNP valid,").click();
+  await page.getByText("Orice cod numeric personal").click();
+
+  await expect(page.getByText("Orice cod numeric personal")).toBeVisible();
+});
+test("test2", async ({ page }) => {});
+// test("test", async ({ page }) => {
+//   await page.goto("https://cnpgenerator.ro/");
+//   await page.getByLabel("Sex: *").selectOption("0");
+//   await page.getByLabel("Țara nașterii: *").selectOption("false");
+//   await page.getByLabel("Județul nașterii: *").selectOption("10");
+//   await page.getByRole("link", { name: "Contact" }).click();
+//   await page.getByLabel("Email").click();
+//   await page.getByLabel("Email").fill("test@k.com");
+//   await page.getByRole("link", { name: "Generator CNP" }).click();
+//   await page.getByLabel("Data nașterii:").fill("1979-04-19");
+//   await page.getByLabel("Județul nașterii: *").selectOption("16");
+//   await page.getByLabel("Țara nașterii: *").selectOption("false");
+//   await page.getByLabel("Țara nașterii: *").selectOption("true");
+//   await page.getByLabel("Țara nașterii: *").selectOption("false");
+//   await page.getByLabel("Țara nașterii: *").selectOption("true");
+//   await page.getByLabel("Sex: *").selectOption("0");
+//   await page.getByRole("link", { name: "Validare CNP", exact: true }).click();
+//   await page.getByPlaceholder("Introduceti CNP").click();
+//   await page.getByRole("button", { name: "Valideaza CNP" }).click();
+//   await page.getByPlaceholder("Introduceti CNP").click();
+//   await page.getByRole("button", { name: "Valideaza CNP" }).click();
+//   await page.getByPlaceholder("Introduceti CNP").click();
+//   await page.getByPlaceholder("Introduceti CNP").fill("1930426415035");
+//   await page.getByRole("button", { name: "Valideaza CNP" }).click();
+//   await expect(page.getByText("CNP-ul este valid!")).toBeVisible();
+//   await page.getByPlaceholder("Introduceti CNP").click();
+//   await page.getByPlaceholder("Introduceti CNP").fill("19304264150351");
+//   await page.getByRole("button", { name: "Valideaza CNP" }).click();
+//   await page.getByText("CNP-ul trebuie sa contina 13").click();
+//   await page.getByText("Acest tool vă va verifica CNP").click();
+//   await page.getByText("Orice cod numeric personal").click();
+//   await page.getByText("Pentru orice CNP valid,").click();
+//   await page.getByText("Orice cod numeric personal").click();
+
+//   await expect(page.getByText("Orice cod numeric personal"))
+// });

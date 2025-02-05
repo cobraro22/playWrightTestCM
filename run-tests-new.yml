@@ -1,0 +1,51 @@
+name: PLayWright CM TEST - $(SourceBranchName)_$(Hours)-$(Minutes)_$(Date:yyyy_MM_dd)_$(BuildID)$(Rev:.r)
+
+# trigger:
+#   branches:
+#     include:
+#       - main # Sau ramura ta principală
+trigger: none
+
+parameters:
+  - name: grepTags
+    type: object
+    default: '"@smoke"'
+
+schedules:
+  - cron: '0 2 * * *'
+    displayName: Automation Daily Morning Tests Run
+    branches:
+      include:
+        - main
+    always: true
+
+pool:
+  vmImage: "ubuntu-latest" # Poți folosi orice altă imagine preferată
+
+steps:
+  - task: NodeTool@0
+    inputs:
+      versionSpec: "16.x" # Folosește versiunea de Node.js pe care o ai nevoie
+    displayName: "Install Node.js"
+
+  - script: |
+      npm install -g playwright
+      npm ci  # Instalează dependențele proiectului
+    displayName: "Install dependencies"
+
+  - script: |
+      npx playwright install  # Instalează browserele necesare Playwright
+    displayName: "Install Playwright Browsers"
+
+  - script: |
+      # Rulează testele Playwright folosind variabila GREP_TAG
+      npx playwright test --grep $(grepTags)
+    displayName: "Run Playwright Tests"
+    # env:
+    #   GREP_TAG: $(grepTags) # Setează variabila GREP_TAG pentru a fi folosită în comandă
+  - task: PublishPipelineArtifact@1
+    condition: failed()
+    inputs:
+      targetPath: 'playwright-report'
+      artifact: 'playwright-report'
+    displayName: 'Publicare raport Playwright'

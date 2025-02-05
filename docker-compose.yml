@@ -1,0 +1,10 @@
+version: "3"
+services:
+  playwright-tests:
+    build: .
+    container_name: playwright-runner
+    volumes:
+      - .:/app
+      - ./playwright-report:/app/playwright-report
+    working_dir: /app
+    command: ["npx", "playwright", "test", "--reporter=html"]
