@@ -29,10 +29,26 @@ export default defineConfig({
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: "html",
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
+
+  expect: {
+    // Maximum time expect() should wait for the condition to be met.
+    timeout: 7000,
+
+    toHaveScreenshot: {
+      // An acceptable amount of pixels that could be different, unset by default.
+      maxDiffPixels: 150000,
+    },
+
+    toMatchSnapshot: {
+      // An acceptable ratio of pixels that are different to the
+      // total amount of pixels, between 0 and 1.
+      maxDiffPixelRatio: 0.18,
+    },
+  },
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
     baseURL: "http://practicesoftwaretesting.com",
-
+    testIdAttribute: "data-test",
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: "on",
     actionTimeout: 0,
@@ -48,7 +64,11 @@ export default defineConfig({
     {
       name: "chrome",
       dependencies: ["setup"],
-      use: { ...devices["Desktop Chrome"], permissions: ["clipboard-read"] },
+      use: {
+        ...devices["Desktop Chrome"],
+        permissions: ["clipboard-read"],
+        viewport: { width: 1280, height: 720 },
+      },
     },
 
     {
