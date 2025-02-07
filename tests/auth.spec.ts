@@ -1,6 +1,9 @@
 import { test as setup, expect } from "@playwright/test";
 
-setup("create customer 01 auth", async ({ page, context }) => {
+setup("create customer 01 auth", async ({ browser }) => {
+  const context = await browser.newContext();
+  const page = await context.newPage();
+
   const email = "customer@practicesoftwaretesting.com";
   const password = "welcome01";
   const customer01AuthFile = ".auth/customer01.json";
@@ -13,4 +16,6 @@ setup("create customer 01 auth", async ({ page, context }) => {
 
   await expect(page.getByTestId("nav-menu")).toContainText("Jane Doe");
   await context.storageState({ path: customer01AuthFile });
+
+  await context.close();
 });
