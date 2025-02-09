@@ -1,7 +1,11 @@
 import { test, expect } from "@playwright/test";
 
+import { Utils } from "../TEST/components/utils.ts";
+
 test.describe("API test", () => {
   let tokenLogin = "";
+  let lastMessageId = "";
+  // let name="";
   const urlAPI = "https://api.practicesoftwaretesting.com";
 
   test.beforeEach(async ({ request }) => {
@@ -295,7 +299,7 @@ test.describe("API test", () => {
     console.log(favorites);
   });
 
-  test.only("me page", async ({ request }) => {
+  test("me page", async ({ request }) => {
     const response = await request.get(`${urlAPI}/users/me`, {
       headers: {
         Authorization: `Bearer${tokenLogin}`,
@@ -339,5 +343,116 @@ test.describe("API test", () => {
     const reponsePUTbody = await responsePUT.json();
 
     console.log(reponsePUTbody);
+
+    const responsePATCH = await request.patch(`${urlAPI}/users/${body.id}`, {
+      headers: {
+        Authorization: `Bearer${tokenLogin}`,
+      },
+      data: {
+        postcode: "333",
+        city: "Vienn3",
+      },
+    });
+
+    expect(responsePATCH.status()).toBe(200);
+
+    const reponsePATCHbody = await responsePATCH.json();
+
+    console.log(reponsePATCHbody);
+  });
+
+  test("message", async ({ request }) => {
+    const response = await request.get(`${urlAPI}/users/me`, {
+      headers: {
+        Authorization: `Bearer ${tokenLogin}`,
+      },
+    });
+
+    expect(response.status()).toBe(200);
+    // console.log(response.headers());
+
+    const body = await response.json();
+
+    console.log(body);
+
+    console.log(body.id);
+    const name = body.first_name + " " + body.last_name;
+    console.log(name);
+
+    const requestPostMessage = await request.post(`${urlAPI}/messages`, {
+      headers: {
+        Authorization: `Bearer ${tokenLogin}`,
+      },
+      data: {
+        subject: "customer-" + Utils.generateRandomNumber(10),
+        name: name,
+        message: Utils.generateRandomText(50),
+      },
+    });
+    expect(requestPostMessage.status()).toBe(200);
+
+    const bodyPostMessage = await requestPostMessage.json();
+
+    console.log(bodyPostMessage);
+
+    lastMessageId = bodyPostMessage.id;
+  });
+
+  test("checkMessageList", async ({ request }) => {
+    const responseGetMessages = await request.get(`${urlAPI}/messages`, {
+      headers: {
+        Authorization: `Bearer ${tokenLogin}`,
+      },
+    });
+
+    expect(responseGetMessages.status()).toBe(200);
+
+    const bodyGetMessages = await responseGetMessages.json();
+
+    console.log(bodyGetMessages);
+
+    const arrayMessages2 = bodyGetMessages.data
+      .filter((obiect: { status: string }) => obiect.status !== "NEW") // Filtrăm doar mesajele cu status "new"
+      .map((obiect: { id: string; subject: string; status: string }) => [
+        obiect.id,
+        obiect.subject,
+        obiect.status,
+      ]); // Transformăm obiectele
+
+    const arrayMessages = bodyGetMessages.data.map(
+      (obiect: { id: string; subject: string; status: string }) => [
+        obiect.id,
+        obiect.subject,
+        obiect.status,
+      ]
+    );
+
+    console.log(arrayMessages);
+
+    console.log(arrayMessages2);
+
+    console.log(...arrayMessages.keys());
+
+    let arrayTest = [2, [4, 5], [3, 5, 4]];
+    console.log(arrayTest.flat());
+
+    console.log(arrayTest.join());
+
+    console.log(arrayTest.some((el) => el === 2));
+
+    console.log(arrayTest.every((el) => el === 2));
+
+    // console.log(arrayTest.reverse());
+
+    console.log(arrayTest.filter((el) => el === 2));
+
+    arrayTest.forEach((el) => console.log(el));
+    // console.log(lastMessageId);
+  });
+
+  test("functie", () => {
+    console.log(Utils.generateRandomNumber2(10));
+
+    console.log(Utils.generateRandomText(20));
   });
 });
