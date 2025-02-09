@@ -32,7 +32,7 @@ jobs:
       if: always()
       run: | 
           mkdir -p playwright-report
-          npx playwright show-report --output=playwright-report
+          npx playwright show-report playwright-report
   
     - name: Deploy Reports -> GitHUB pages develop
       if: always()
