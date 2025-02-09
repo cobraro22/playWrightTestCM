@@ -35,6 +35,7 @@ jobs:
       run: | 
           mkdir -p playwright-report
           npx playwright show-report --playwright-report
+  
     - name: Deploy Reports -> GitHUB pages develop
       if: always()
       uses: peaceiris/actions-gh-pages@v3
