@@ -28,11 +28,11 @@ jobs:
     - name: Run test
       run: npx playwright test --grep "@smoke"
 
-    - name: Generare rapoarte HTML
-      if: always()
-      run: | 
-          mkdir -p playwright-report
-          npx playwright show-report playwright-report
+    # - name: Generare rapoarte HTML
+    #   if: always()
+    #   run: | 
+    #       mkdir -p playwright-report
+    #       npx playwright show-report playwright-report
   
     - name: Deploy Reports -> GitHUB pages develop
       if: always()
