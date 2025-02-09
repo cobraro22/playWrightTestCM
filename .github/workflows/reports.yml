@@ -1,0 +1,46 @@
+name: reports HTML
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+    - uses: actions/checkout@v3
+    
+    - name: Setup Node js
+    - uses: actions/setup-node@v3
+      with: 
+        node-version: 18
+    
+    - name: Install dependencier
+      run: npm install
+    
+    - name: Install PW browsers
+      run: npx playwright install --with-deps
+    
+    - name: Run test
+      run: npx playwright test
+
+    - name: Generare rapoarte HTML
+      if: always()
+      run: | 
+          mkdir -p playwright-report
+          npx playwright show-report --playwright-report
+    - name: Deploy Reports -> GitHUB pages develop
+      if: always()
+      uses: peaceiris/actions-gh-pages@v3
+      with: 
+        github_token: ${{ secrets.GITHUB_TOKEN}}  
+        publish_dir: ./docs
+        publish_branch: develop
+     
+  
