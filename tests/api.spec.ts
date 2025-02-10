@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 
-import { Utils } from "../TEST/components/utils.ts";
+import { Utils } from "../components/utils.ts";
 
 test.describe("API test", () => {
   let tokenLogin = "";
