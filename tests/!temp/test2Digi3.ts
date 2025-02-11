@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-import { locatori } from "../data/locatori";
+import { locatori } from "../../data/locatori";
 
 test.describe("suita de teste DIGI", () => {
   test.beforeEach(async ({ page }) => {

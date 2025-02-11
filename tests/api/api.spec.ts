@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 
-import { Utils } from "../components/utils.ts";
+import { Utils } from "../../components/utils";
 
 test.describe("API test", () => {
   let tokenLogin = "";
@@ -398,7 +398,7 @@ test.describe("API test", () => {
     lastMessageId = bodyPostMessage.id;
   });
 
-  test("checkMessageList", async ({ request }) => {
+  test("checkMessageList", { tag: "@api" }, async ({ request }) => {
     const responseGetMessages = await request.get(`${urlAPI}/messages`, {
       headers: {
         Authorization: `Bearer ${tokenLogin}`,

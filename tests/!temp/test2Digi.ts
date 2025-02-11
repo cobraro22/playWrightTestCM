@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-import { locatori } from "../data/locatori";
+import { locatori } from "../../data/locatori.ts";
 import { url } from "inspector";
 
 test.describe("suita de teste DIGI", () => {
